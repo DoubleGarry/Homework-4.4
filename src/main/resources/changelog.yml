@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: hw-4,3.sql
