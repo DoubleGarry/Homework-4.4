@@ -9,7 +9,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "students")
+@EqualsAndHashCode(of = {"name", "color"})
 @ToString(exclude = "students")
 @Builder
 @Entity

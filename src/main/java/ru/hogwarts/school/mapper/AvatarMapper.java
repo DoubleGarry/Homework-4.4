@@ -1,28 +1,37 @@
 package ru.hogwarts.school.mapper;
 
-import org.springframework.stereotype.Component;
+import ru.hogwarts.school.controller.AvatarController;
 import ru.hogwarts.school.dto.AvatarDto;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.repository.AvatarRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
+import ru.hogwarts.school.service.InfoService;
+
+import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class AvatarMapper {
-    private AvatarRepository avatarRepository;
-    private StudentMapper studentMapper;
-
-    public AvatarMapper(AvatarRepository avatarRepository, StudentMapper studentMapper) {
-        this.avatarRepository = avatarRepository;
-        this.studentMapper = studentMapper;
-    }
+    private final AvatarRepository avatarRepository;
+    private final InfoService infoService;
 
     public AvatarDto toDto(Avatar avatar) {
-
         return AvatarDto.builder()
                 .id(avatar.getId())
-                .filePath(avatar.getFilePath())
+                .avatarUrl(
+                        UriComponentsBuilder.newInstance()
+                                .scheme("http")
+                                .host("localhost")
+                                .port(infoService.getPort())
+                                .pathSegment(AvatarController.BASE_PATH, String.valueOf(avatar.getStudent().getId()))
+                                .toUriString()
+                )
                 .fileSize(avatar.getFileSize())
                 .mediaType(avatar.getMediaType())
                 .studentId(avatarRepository.studentId(avatar.getId()))
                 .build();
     }
+
 }

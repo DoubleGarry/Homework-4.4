@@ -1,23 +1,20 @@
 package ru.hogwarts.school.mapper;
 
-import org.springframework.stereotype.Component;
 import ru.hogwarts.school.dto.StudentDtoIn;
 import ru.hogwarts.school.dto.StudentDtoOut;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@AllArgsConstructor
 public class StudentMapper {
     private final FacultyMapper facultyMapper;
     private final FacultyRepository facultyRepository;
-
-    public StudentMapper(FacultyMapper facultyMapper, FacultyRepository facultyRepository) {
-        this.facultyMapper = facultyMapper;
-        this.facultyRepository = facultyRepository;
-    }
 
     public StudentDtoOut toDto(Student student) {
         StudentDtoOut studentDtoOut = new StudentDtoOut();
