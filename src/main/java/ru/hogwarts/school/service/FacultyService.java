@@ -1,6 +1,5 @@
 package ru.hogwarts.school.service;
 
-import org.springframework.stereotype.Service;
 import ru.hogwarts.school.dto.FacultyDtoIn;
 import ru.hogwarts.school.dto.FacultyDtoOut;
 import ru.hogwarts.school.dto.StudentDtoOut;
@@ -11,25 +10,18 @@ import ru.hogwarts.school.mapper.StudentMapper;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
+@AllArgsConstructor
 public class FacultyService {
     private final FacultyRepository facultyRepository;
     private final FacultyMapper facultyMapper;
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
-
-    public FacultyService(FacultyRepository facultyRepository,
-                          FacultyMapper facultyMapper,
-                          StudentRepository studentRepository,
-                          StudentMapper studentMapper) {
-        this.facultyRepository = facultyRepository;
-        this.facultyMapper = facultyMapper;
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
-    }
 
     public FacultyDtoOut create(FacultyDtoIn facultyDtoIn) {
         return facultyMapper.toDto(
@@ -76,7 +68,7 @@ public class FacultyService {
         return facultyRepository.findByNameIgnoreCase(facultyName)
                 .map(Faculty::getId)
                 .map(studentRepository::findAllByFaculty_id)
-                .orElseThrow(()->new FacultyNameNotFoundException(facultyName)).stream()
+                .orElseThrow(() -> new FacultyNameNotFoundException(facultyName)).stream()
                 .map(studentMapper::toDto)
                 .toList();
     }

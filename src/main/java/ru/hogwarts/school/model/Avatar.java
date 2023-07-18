@@ -6,14 +6,14 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "student")
+@EqualsAndHashCode(of = "filePath")
 @ToString(exclude = "student")
 @Builder
 @Entity
 public class Avatar {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
 
     private String filePath;
@@ -23,8 +23,9 @@ public class Avatar {
 
     private String mediaType;
 
+    @Lob
     private byte[] data;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Student student;
 }

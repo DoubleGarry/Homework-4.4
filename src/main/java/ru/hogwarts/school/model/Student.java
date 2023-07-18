@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "faculty")
+@EqualsAndHashCode(of = "name")
 @ToString(exclude = "faculty")
 @Builder
 @Entity
@@ -15,13 +15,11 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 }

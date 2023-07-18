@@ -1,7 +1,5 @@
 package ru.hogwarts.school.service;
 
-import jakarta.annotation.Nullable;
-import org.springframework.stereotype.Service;
 import ru.hogwarts.school.dto.FacultyDtoOut;
 import ru.hogwarts.school.dto.StudentDtoIn;
 import ru.hogwarts.school.dto.StudentDtoOut;
@@ -15,30 +13,21 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
+import jakarta.annotation.Nullable;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
     private final AvatarRepository avatarRepository;
     private final StudentMapper studentMapper;
     private final FacultyMapper facultyMapper;
-
-    public StudentService(StudentRepository studentRepository,
-                          StudentMapper studentMapper,
-                          FacultyRepository facultyRepository,
-                          FacultyMapper facultyMapper,
-                          AvatarRepository avatarRepository
-    ) {
-        this.studentMapper = studentMapper;
-        this.facultyMapper = facultyMapper;
-        this.studentRepository = studentRepository;
-        this.facultyRepository = facultyRepository;
-        this.avatarRepository = avatarRepository;
-    }
 
     public StudentDtoOut create(StudentDtoIn studentDtoIn) {
         return studentMapper.toDto(
@@ -103,6 +92,7 @@ public class StudentService {
         return avatarRepository.findByStudent_id(studentId)
                 .orElseThrow(() -> new AvatarNotFoundException(studentId));
     }
+
     public Integer getTotalCountStudents() {
         return studentRepository.getTotalCountStudents();
     }

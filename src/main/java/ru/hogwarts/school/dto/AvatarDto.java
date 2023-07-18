@@ -1,18 +1,17 @@
 package ru.hogwarts.school.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.Column;
+import lombok.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Builder
 public class AvatarDto {
     private long id;
-
-    private String filePath;
-
+    private String avatarUrl;
     private long fileSize;
-
     private String mediaType;
-
     private long studentId;
 }
